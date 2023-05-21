@@ -6,7 +6,7 @@ const nodemailer = require('nodemailer');
 
 const app = express();
 app.use(express.json());
-
+const PORT = process.env.PORT || 3000;
 mongoose.connect('mongodb+srv://vuhoangthach1402:hoangthach123@cluster0.jdvz1fg.mongodb.net/hello', {useNewUrlParser: true, useUnifiedTopology: true});
 
 const userSchema = new mongoose.Schema({
@@ -106,4 +106,4 @@ app.get('/verify-email', async (req, res) => {
 
 
 
-app.listen(3000, () => console.log('Server is running on port 3000'));
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
