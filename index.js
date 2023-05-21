@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 
 app.get('/', async (req,res)=>{
-    const users = await User.find() ;
+    const users = await User.find({}) ;
     res.json(users)
     // res.send('hello login system') 
 })
