@@ -14,7 +14,9 @@ const userSchema = new mongoose.Schema({
     password: String,
     isVerified: { type: Boolean, default: false }
 });
-
+app.get('/',(req,res)=>{
+    res.send('hello login system')
+})
 const User = mongoose.model('User', userSchema);
 
 app.post('/register', async (req, res) => {
