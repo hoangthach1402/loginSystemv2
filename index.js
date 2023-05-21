@@ -14,11 +14,14 @@ const userSchema = new mongoose.Schema({
     password: String,
     isVerified: { type: Boolean, default: false }
 });
-app.get('/',(req,res)=>{
-    res.send('hello login system')
-})
+
 const User = mongoose.model('User', userSchema);
 
+app.get('/', async (req,res)=>{
+    const users = await User.find() ;
+    res.json(users)
+    // res.send('hello login system') 
+})
 app.post('/register', async (req, res) => {
     const { email, password } = req.body;
     
