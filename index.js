@@ -7,7 +7,7 @@ const nodemailer = require('nodemailer');
 const app = express();
 app.use(express.json());
 const PORT = process.env.PORT || 3000;
-mongoose.connect('mongodb+srv://vuhoangthach1402:hoangthach123@cluster0.jdvz1fg.mongodb.net/hello', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb+srv://vuhoangthach1402:hoangthach123@cluster0.jdvz1fg.mongodb.net/hello',{});
 
 const userSchema = new mongoose.Schema({
     email: String,
