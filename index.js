@@ -8,6 +8,18 @@ const app = express();
 app.use(express.json());
 const PORT = process.env.PORT || 3000;
 mongoose.connect('mongodb+srv://hoangthach1402:hoangthach123@cluster0.mmtet.mongodb.net/loginSystem?retryWrites=true&w=majority',{useNewUrlParser: true, useUnifiedTopology: true});
+const API_KEY = 'daylaapikey';
+const checkAPIKey = (req, res, next) => {
+    const apiKey = req.headers['x-api-key'];
+    console.log(apiKey)
+    if (apiKey && apiKey === API_KEY) {
+      next(); // Cho phép tiếp tục xử lý các route
+    } else {
+      res.status(401).json({ error: 'API key không hợp lệ' });
+    }
+  };
+  
+  app.use(checkAPIKey);
 
 const userSchema = new mongoose.Schema({
     email: String,
