@@ -7,7 +7,22 @@ const nodemailer = require('nodemailer');
 const app = express();
 app.use(express.json());
 const PORT = process.env.PORT || 3000;
-mongoose.connect('mongodb+srv://hoangthach1402:hoangthach123@cluster0.jdvz1fg.mongodb.net',{useNewUrlParser: true, useUnifiedTopology: true});
+const DATA_URL ="mongodb+srv://hoangthach1402:hoangthach123@cluster0.mmtet.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+const connectDB = async () => {
+    try {
+      await mongoose.connect("mongodb+srv://hoangthach1402:hoangthach123@cluster0.mmtet.mongodb.net/loginSystem?retryWrites=true&w=majority", {
+        useUnifiedTopology: true,
+      });
+  
+      console.log("MongoDB connected");
+    } catch (error) {
+      console.log(error.message);
+      process.exit(1);
+    }
+  };
+  
+  connectDB();
+// mongoose.connect('mongodb+srv://hoangthach1402:hoangthach123@cluster0.jdvz1fg.mongodb.net',{useNewUrlParser: true, useUnifiedTopology: true});
 
 const userSchema = new mongoose.Schema({
     email: String,
@@ -18,10 +33,9 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 
 app.get('/', async (req,res)=>{
-    // const users = await User.find({}) ;
-    // res.json(users)
-    // res.send('hello login system') 
-    res.send('hello login system')
+    const users = await User.find();
+    res.json(users)
+    
 })
 app.post('/register', async (req, res) => {
     const { email, password } = req.body;
