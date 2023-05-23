@@ -114,16 +114,18 @@ app.post('/register', async (req, res) => {
 });
 
 // ... Code for login goes here ...
-app.post('/login', async (req, res) => {
+
+
+  app.post('/login', async (req, res) => {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select('-password');
   
     if (user) {
       if (user.isVerified) {
         const validPassword = await bcrypt.compare(password, user.password);
         if (validPassword) {
           const token = jwt.sign({ userId: user._id }, 'SECRET_KEY', { expiresIn: '1h' });
-          res.json({ message: 'Đăng nhập thành công', token });
+          res.json({ message: 'Đăng nhập thành công', user, token });
         } else {
           res.send('Mật khẩu không chính xác');
         }
@@ -134,7 +136,7 @@ app.post('/login', async (req, res) => {
       res.send('Không tìm thấy người dùng');
     }
   });
-
+  
 
 app.get('/verify-email', async (req, res) => {
     try {
